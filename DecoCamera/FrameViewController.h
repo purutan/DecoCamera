@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
-@interface FrameViewController : ViewController
+@interface FrameViewController : ViewController;
+
+
 
 @end

@@ -10,7 +10,7 @@
 #import "ImageViewController.h"
 
 
-@interface FrameViewController() <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface FrameViewController() <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource ,UINavigationControllerDelegate>
 
 //カメラの機能（UIImagePickerController）とUICollectionViewのDelegateを有効化
 //Delegate（デリゲート）とは、あるインスタンスから他のインスタンスに通知を送る機能
@@ -68,9 +68,7 @@
     imageView.image = image;
     return cell;
 }
- 
  全く同じメソッドを書いているつもりなのになぜかワーニングが出る
- 
 */
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -97,12 +95,21 @@
     
         UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
         //カメラを確認
+           
+    
         
         imagePickerController.delegate = self;
         //デリゲートを自分自信に設定
         
+        imagePickerController.allowsEditing = YES; //これで拡大？
+           
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        // 写真モードを選ぶ。（映像モードもある）
+           
         imagePickerController.cameraViewTransform = CGAffineTransformTranslate(imagePickerController.cameraViewTransform, 0, 50);
-        /* 既存のアフィン変換行列に平行移動の演算を施します。現在の変換行列は、アフィン変換と呼ばれる特殊な行列で、平行移動、回転、拡大縮小の演算
+        /*
+         ずれ防止
+         既存のアフィン変換行列に平行移動の演算を施します。現在の変換行列は、アフィン変換と呼ばれる特殊な行列で、平行移動、回転、拡大縮小の演算
         （座標系を移動、回転、拡大縮小する計算）を施すことにより、ある座標系の点を別の座標系に写像するために使う。
          CG = Core Graphic
         */
@@ -113,6 +120,7 @@
         rect.size.height -= imagePickerController.navigationBar.bounds.size.height;  //　A -= B は　A = A-B と同じ意味
         CGFloat barHeight = (rect.size.height - rect.size.width) / 2; //高さから幅を引いて２で割った値を隠すバーにしている
         UIGraphicsBeginImageContext(rect.size); //メモリデバイスコンテキストを使ってメモリ上に画像を作っている
+           
         [[UIColor colorWithWhite:0 alpha:1] set];
         UIRectFillUsingBlendMode(CGRectMake(0, 0, rect.size.width, barHeight), kCGBlendModeNormal);
         //多分上側の隠すバーの設定 UIRectFillUsingBlendModeで矩形(四角)を描いている
@@ -138,11 +146,20 @@
         // 画面上にフレームなどを置きます。
         [imagePickerController setCameraOverlayView:baseView]; //OveelayView は setCameraOverLayView にしないと上手くいかない
 
+           
+           
+           
         // モーダルビューとしてカメラ画面を呼び出す
         [self presentViewController:imagePickerController animated:YES completion:nil];
         
+           
+           
+           
     }
 }
+
+
+/*
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     // iphone標準機能の「Use Photo」ボタンを押したあとに didFinishPickingMediaWithInfo: が呼び出される。
@@ -178,11 +195,13 @@
     
     // 画像を描画します。
     [capturedImage drawAtPoint:CGPointMake(0, -barHeight)];
+    NSLog(@"値は％0ld",(float)-barHeight);
     capturedImage = UIGraphicsGetImageFromCurrentImageContext();
-    /* 今回はキャプチャ画像を使っているが
+    
+    //今回はキャプチャ画像を使っているが
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     ↑のように書くことでiphoneで撮った画像を使うこともできる
-     */
+     //
     
     // 描画終了
     UIGraphicsEndImageContext();
@@ -191,9 +210,63 @@
     [self performSegueWithIdentifier:@"ImageView" sender:self]; //画面の遷移
 }
 
+*/
+
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    picker.allowsEditing = true;
+    
+    // 浮世絵フレームと写真は別になっているので合成しなければいけません。
+    // キャプチャ対象をWindowにします。
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    // これからキャプチャするための作業場所を生成します。
+    UIGraphicsBeginImageContextWithOptions(window.bounds.size, NO, 0.0f);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // １つ１つのWindowの現在の表示内容を作業場所に描画して行きます。
+    for (UIWindow *aWindow in [UIApplication sharedApplication].windows) {
+        [aWindow.layer renderInContext:context];
+    }
+    
+    // 描画した内容をUIImageとして受け取ります。
+    UIImage *capturedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    //capturedImage.allowsEditing = YES;
+    
+    // 描画終了
+    UIGraphicsEndImageContext();
+    
+    // Window全体だと不要な部分があるので、浮世絵フレームを含めた写真の部分だけを切り抜きます
+    CGRect rect = picker.view.bounds;
+    rect.size.height -= picker.navigationBar.bounds.size.height;
+    CGFloat barHeight = (rect.size.height - rect.size.width) / 2;
+    UIGraphicsBeginImageContext(CGSizeMake(rect.size.width, rect.size.width));
+    
+    
+    
+    // 画像を描画します。
+    [capturedImage drawAtPoint:CGPointMake(0, -barHeight)];
+    capturedImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // 描画終了
+    UIGraphicsEndImageContext();
+    
+   
+
+    self.editImage = capturedImage;
+    [self performSegueWithIdentifier:@"ImageView" sender:self];
+}
+
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     //画面の遷移時にこのメソッドが呼び出されます。
     //今回の場合はImageViewの遷移が行われた時、segueで紐づけられた次の画面に画像を渡しています。
+    
+    
+    
     
     //Segueの特定
     if ( [[segue identifier] isEqualToString:@"ImageView"] ) {

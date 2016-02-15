@@ -90,18 +90,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background.png" translatesAutoresizingMaskIntoConstraints="NO" id="VgO-JQ-Iyv">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IZV-GR-dT2">
-                                <rect key="frame" x="32" y="8" width="536" height="556"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="IZV-GR-dT2" secondAttribute="height" multiplier="134:139" id="ZFU-Th-ro3"/>
-                                    <constraint firstAttribute="width" secondItem="IZV-GR-dT2" secondAttribute="height" multiplier="140:143" id="pti-vq-zBa"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="pti-vq-zBa"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8a-uM-NrG">
                                 <rect key="frame" x="277" y="491" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -130,6 +118,18 @@
                                     <action selector="grayButtonAction:" destination="Pob-6S-VE9" eventType="touchUpInside" id="v9I-En-5dY"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iPd-yF-ZzY" userLabel="Slider">
+                                <rect key="frame" x="30" y="580" width="540" height="31"/>
+                                <connections>
+                                    <action selector="SliderChanged:" destination="Pob-6S-VE9" eventType="valueChanged" id="y3H-wf-Gga"/>
+                                </connections>
+                            </slider>
+                            <stepper opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" stepValue="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="Vqp-k9-ycM">
+                                <rect key="frame" x="253" y="444" width="94" height="29"/>
+                                <connections>
+                                    <action selector="stepperChange:" destination="Pob-6S-VE9" eventType="valueChanged" id="AhQ-3C-n8z"/>
+                                </connections>
+                            </stepper>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2a-Ac-f7T">
                                 <rect key="frame" x="20" y="0.0" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -144,29 +144,48 @@
                                     <action selector="backButtonAction:" destination="Pob-6S-VE9" eventType="touchUpInside" id="mA1-8n-hPg"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IZV-GR-dT2">
+                                <rect key="frame" x="32" y="8" width="536" height="536"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="IZV-GR-dT2" secondAttribute="height" multiplier="1:1" id="ZFU-Th-ro3"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="VgO-JQ-Iyv" secondAttribute="trailing" id="2PI-RU-bdH"/>
+                            <constraint firstItem="Vqp-k9-ycM" firstAttribute="centerX" secondItem="uen-yI-aza" secondAttribute="centerX" id="4gg-6N-zge"/>
                             <constraint firstItem="MNg-dV-ATU" firstAttribute="top" secondItem="W8a-uM-NrG" secondAttribute="bottom" constant="21" id="Afa-sh-uDO"/>
                             <constraint firstItem="A7H-5x-Gdp" firstAttribute="top" secondItem="MNg-dV-ATU" secondAttribute="bottom" constant="28" id="Ckw-xR-CQr"/>
                             <constraint firstAttribute="trailing" secondItem="IZV-GR-dT2" secondAttribute="trailing" constant="32" id="EeB-4Z-uQS"/>
+                            <constraint firstItem="W8a-uM-NrG" firstAttribute="top" secondItem="Vqp-k9-ycM" secondAttribute="bottom" constant="18" id="HYf-uV-Zmt"/>
                             <constraint firstItem="A7H-5x-Gdp" firstAttribute="top" secondItem="IZV-GR-dT2" secondAttribute="bottom" constant="36" id="Lfx-9j-RZc"/>
                             <constraint firstItem="VgO-JQ-Iyv" firstAttribute="leading" secondItem="uen-yI-aza" secondAttribute="leading" id="MJh-48-iki"/>
+                            <constraint firstAttribute="trailing" secondItem="iPd-yF-ZzY" secondAttribute="trailing" constant="32" id="MYn-Nj-sPQ"/>
                             <constraint firstItem="IZV-GR-dT2" firstAttribute="leading" secondItem="uen-yI-aza" secondAttribute="leading" constant="32" id="PV7-rJ-jhb"/>
                             <constraint firstItem="A7H-5x-Gdp" firstAttribute="top" secondItem="VgO-JQ-Iyv" secondAttribute="bottom" id="PbD-7l-LB6"/>
+                            <constraint firstItem="iPd-yF-ZzY" firstAttribute="centerX" secondItem="uen-yI-aza" secondAttribute="centerX" id="Pt3-GT-f5F"/>
                             <constraint firstItem="e2a-Ac-f7T" firstAttribute="top" secondItem="uen-yI-aza" secondAttribute="top" id="XKT-Um-7Xs"/>
                             <constraint firstItem="MNg-dV-ATU" firstAttribute="top" secondItem="W8a-uM-NrG" secondAttribute="bottom" constant="21" id="ck2-1g-sAL"/>
                             <constraint firstItem="MNg-dV-ATU" firstAttribute="centerX" secondItem="uen-yI-aza" secondAttribute="centerX" id="heh-Og-JNP"/>
                             <constraint firstItem="W8a-uM-NrG" firstAttribute="centerX" secondItem="uen-yI-aza" secondAttribute="centerX" id="mWY-1K-A5w"/>
+                            <constraint firstItem="iPd-yF-ZzY" firstAttribute="top" secondItem="MNg-dV-ATU" secondAttribute="bottom" constant="8" id="nFe-eU-qDk"/>
                             <constraint firstItem="IZV-GR-dT2" firstAttribute="top" secondItem="uen-yI-aza" secondAttribute="top" constant="8" id="rRc-O1-xyx"/>
                             <constraint firstItem="e2a-Ac-f7T" firstAttribute="leading" secondItem="uen-yI-aza" secondAttribute="leading" constant="20" id="uVQ-Te-5GL"/>
                             <constraint firstItem="VgO-JQ-Iyv" firstAttribute="top" secondItem="uen-yI-aza" secondAttribute="top" id="uhg-tW-FXX"/>
+                            <constraint firstItem="iPd-yF-ZzY" firstAttribute="leading" secondItem="uen-yI-aza" secondAttribute="leading" constant="32" id="wlr-Uu-VQV"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Lfx-9j-RZc"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="grayButton" destination="MNg-dV-ATU" id="SJz-ti-BiL"/>
                         <outlet property="imageView" destination="IZV-GR-dT2" id="m9g-FX-dg8"/>
+                        <outlet property="sliderBrightness" destination="iPd-yF-ZzY" id="Qj3-Ms-wYc"/>
+                        <outlet property="stepperScale" destination="Vqp-k9-ycM" id="ygU-EA-cGv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pgo-DB-Rql" userLabel="First Responder" sceneMemberID="firstResponder"/>
