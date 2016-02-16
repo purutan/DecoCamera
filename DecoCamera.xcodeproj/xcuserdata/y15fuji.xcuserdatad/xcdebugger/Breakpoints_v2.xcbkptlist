@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DecoCamera/ImageVie&#xff57;Controller.m"
-            timestampString = "477239374.56277"
+            timestampString = "477247795.775941"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "-stepperChange:"
-            landmarkType = "5">
+            landmarkType = "4">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

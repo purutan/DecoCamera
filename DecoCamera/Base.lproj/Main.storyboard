@@ -124,7 +124,7 @@
                                     <action selector="SliderChanged:" destination="Pob-6S-VE9" eventType="valueChanged" id="y3H-wf-Gga"/>
                                 </connections>
                             </slider>
-                            <stepper opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" stepValue="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="Vqp-k9-ycM">
+                            <stepper opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" maximumValue="10" stepValue="0.050000000000000003" translatesAutoresizingMaskIntoConstraints="NO" id="Vqp-k9-ycM">
                                 <rect key="frame" x="253" y="444" width="94" height="29"/>
                                 <connections>
                                     <action selector="stepperChange:" destination="Pob-6S-VE9" eventType="valueChanged" id="AhQ-3C-n8z"/>
