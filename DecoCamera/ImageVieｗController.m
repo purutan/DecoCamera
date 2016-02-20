@@ -42,12 +42,10 @@ NSInteger grayFlag;
     [self imageEdit];
 }
 - (IBAction)grayButtonAction:(id)sender{
+    self.isGray = !self.isGray; //　Q2.この部分の処理は何のため？　ボタンが押されたかどうかを判定するためのフラグ　bool
+    
     [self imageEdit];
-    if (grayFlag == 1) {
-        grayFlag = 0;
-    } else {
-        grayFlag =1;
-    }
+   
 }
 
 - (void)imageEdit{
@@ -60,12 +58,10 @@ NSInteger grayFlag;
     UIImage* slidedImage = [self sliderEdit:scaleImage];
     
     //グレイ
-    if (grayFlag == 1) {
+    //if (grayFlag == 1) {
+    
     UIImage* grayImages = [self grayImage:slidedImage];
-        self.imageView.image = grayImages;
-    } else  {
-        self.imageView.image = slidedImage;
-    }
+    self.imageView.image = grayImages;
     
 }
 
@@ -90,7 +86,7 @@ NSInteger grayFlag;
     
     NSLog(@"02%lf",_stepperScale.value);
     UIImage *outputImage  = [UIImage imageWithCGImage:imageRef
-                                                scale:0.5f
+                                                scale:2.0f
                                           orientation:UIImageOrientationUp];
     CGImageRelease(imageRef);
     
@@ -104,7 +100,7 @@ NSInteger grayFlag;
     //(戻り値*)メソッド名:(引数の型*)引数
     
     
-    CGFloat scale = _stepperScale.value;
+    CGFloat scale = _stepperScale.value * 2;
     CGSize resizedSize = CGSizeMake(source.size.width * scale,source.size.height * scale);
     
     UIGraphicsBeginImageContext(resizedSize);
@@ -118,7 +114,6 @@ NSInteger grayFlag;
 
 
 - (UIImage *)grayImage:(UIImage *)slidedImage  {
-    self.isGray = !self.isGray; //　Q2.この部分の処理は何のため？ viewDidLoadでNoにしてたが・・・　初期化？
     
     if (self.isGray) {
         
@@ -158,7 +153,7 @@ NSInteger grayFlag;
         [self.grayButton setTitle:@"Gray" forState:UIControlStateNormal];
         
         //self.imageView.image = self.editImage;
-        return self.imageView.image;
+        return slidedImage;
 }
     // return _imageView.image;
     //return grayScaleImage; こちらは使えない
